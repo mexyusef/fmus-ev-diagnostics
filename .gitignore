@@ -1,0 +1,175 @@
+# C++ specific ignores
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake build directories
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CMakeScripts/
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Make build files
+Makefile.in
+autom4te.cache/
+aclocal.m4
+config.status
+config.log
+configure
+depcomp
+install-sh
+missing
+stamp-h1
+
+# Build directories
+Debug/
+Release/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Bb]uild/
+[Dd]ist/
+[Dd]ebug/
+[Rr]elease/
+out/
+
+# IDE specific files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sw?
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# Visual Studio specific
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.vcproj
+*.vcproj.*.user
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+*.psess
+*.vsp
+*.vspx
+*.vssscc
+
+# Xcode specific
+*.xcodeproj/
+*.xcworkspace/
+*.dSYM/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Project specific ignores
+_legacy/
+
+# Logs and temp files
+logs/
+*.log
+*.tmp
+*.temp
+
+# Dependency directories
+external/
+deps/
+third_party/
+vendor/
+
+# Generated documentation
+doc/
+docs/
+
+# Profiling data and debug info
+*.gcda
+*.gcno
+*.prof
+gmon.out
+callgrind.out*
+perf.data*
+
+# Local configuration
+.local/
+compile_flags.txt
+.cache/
+
+# conan package manager
+conan.lock
+conanbuildinfo.*
+conaninfo.txt
+
+# Automotive specific
+*.can
+*.dbc
+*.odx
+/_legacy/

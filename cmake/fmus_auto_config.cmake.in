@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# Find dependencies
+find_dependency(Boost REQUIRED COMPONENTS system filesystem)
+
+# Include the exported targets
+include("${CMAKE_CURRENT_LIST_DIR}/fmus_auto_targets.cmake")
