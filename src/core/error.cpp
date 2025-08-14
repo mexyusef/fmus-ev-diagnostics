@@ -39,18 +39,35 @@ static const std::unordered_map<int, std::string> ERROR_DESCRIPTIONS = {
     { 0x20,     "ERR_FAILED - Operasi gagal dengan alasan tidak spesifik" }
 };
 
-// Implementasi constructor DeviceError
-DeviceError::DeviceError(const std::string& message, int errorCode)
+// Implementation of J2534Error constructor
+J2534Error::J2534Error(ErrorCode code, const std::string& message)
     : std::runtime_error(message),
-      errorCode(errorCode) {
+      errorCode(code) {
 }
 
-// Implementasi method getErrorCode
-int DeviceError::getErrorCode() const {
-    return errorCode;
+J2534Error::J2534Error(int code, const std::string& message)
+    : std::runtime_error(message),
+      errorCode(static_cast<ErrorCode>(code)) {
 }
 
-// Utility function untuk membuat pesan error standar berdasarkan kode error
+// Utility functions
+std::string errorCodeToString(ErrorCode code) {
+    auto it = ERROR_DESCRIPTIONS.find(static_cast<int>(code));
+    if (it != ERROR_DESCRIPTIONS.end()) {
+        return it->second;
+    }
+    return "Unknown error";
+}
+
+std::string formatErrorMessage(ErrorCode code, const std::string& operation) {
+    std::stringstream ss;
+    ss << "J2534 error during " << operation << ": ";
+    ss << errorCodeToString(code);
+    ss << " (code: 0x" << std::hex << static_cast<int>(code) << ")";
+    return ss.str();
+}
+
+// Legacy function for backward compatibility
 std::string formatErrorMessage(int errorCode, const std::string& operation) {
     std::stringstream ss;
     ss << "J2534 error during " << operation << ": ";
@@ -64,6 +81,37 @@ std::string formatErrorMessage(int errorCode, const std::string& operation) {
 
     ss << " (code: 0x" << std::hex << errorCode << ")";
     return ss.str();
+}
+
+// Protocol utility functions
+std::string protocolToString(Protocol protocol) {
+    switch (protocol) {
+        case Protocol::J1850VPW: return "J1850VPW";
+        case Protocol::J1850PWM: return "J1850PWM";
+        case Protocol::ISO9141: return "ISO9141";
+        case Protocol::ISO14230_4: return "ISO14230-4";
+        case Protocol::CAN: return "CAN";
+        case Protocol::ISO15765: return "ISO15765";
+        case Protocol::SCI_A_ENGINE: return "SCI_A_ENGINE";
+        case Protocol::SCI_A_TRANS: return "SCI_A_TRANS";
+        case Protocol::SCI_B_ENGINE: return "SCI_B_ENGINE";
+        case Protocol::SCI_B_TRANS: return "SCI_B_TRANS";
+        default: return "Unknown";
+    }
+}
+
+Protocol stringToProtocol(const std::string& str) {
+    if (str == "J1850VPW") return Protocol::J1850VPW;
+    if (str == "J1850PWM") return Protocol::J1850PWM;
+    if (str == "ISO9141") return Protocol::ISO9141;
+    if (str == "ISO14230-4") return Protocol::ISO14230_4;
+    if (str == "CAN") return Protocol::CAN;
+    if (str == "ISO15765") return Protocol::ISO15765;
+    if (str == "SCI_A_ENGINE") return Protocol::SCI_A_ENGINE;
+    if (str == "SCI_A_TRANS") return Protocol::SCI_A_TRANS;
+    if (str == "SCI_B_ENGINE") return Protocol::SCI_B_ENGINE;
+    if (str == "SCI_B_TRANS") return Protocol::SCI_B_TRANS;
+    return Protocol::CAN; // Default
 }
 
 } // namespace j2534

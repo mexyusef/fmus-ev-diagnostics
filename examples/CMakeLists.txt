@@ -9,21 +9,59 @@ set_target_properties(basic_diagnostics PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
 )
 
-# Make the examples depend on the copy_dlls target
-add_dependencies(basic_diagnostics copy_dlls)
-
-# Copy DLLs to the examples output directory
-add_custom_command(
-    TARGET basic_diagnostics POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/bin/examples/${CMAKE_BUILD_TYPE}"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/fmus_auto.dll"
-        "C:/libuv-install/bin/uv.dll"
-        "C:/usockets-install/bin/uSockets.dll"
-        "C:/vcpkg/packages/zlib_x64-windows/bin/zlib1.dll"
-        "${CMAKE_BINARY_DIR}/bin/examples/${CMAKE_BUILD_TYPE}/"
-    COMMENT "Copying DLLs to examples directory"
+# Comprehensive test example
+add_executable(comprehensive_test comprehensive_test.cpp)
+target_link_libraries(comprehensive_test PRIVATE fmus_auto)
+set_target_properties(comprehensive_test PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
 )
+
+# Phase 3 complete test example
+add_executable(phase3_complete_test phase3_complete_test.cpp)
+target_link_libraries(phase3_complete_test PRIVATE fmus_auto)
+set_target_properties(phase3_complete_test PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
+)
+
+# Phase 5 complete application example
+add_executable(phase5_complete_application phase5_complete_application.cpp)
+target_link_libraries(phase5_complete_application PRIVATE fmus_auto)
+set_target_properties(phase5_complete_application PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
+)
+
+# Copy shared library to examples directory on Windows
+if(WIN32 AND NOT FMUS_AUTO_STATIC_BUILD)
+    add_custom_command(
+        TARGET basic_diagnostics POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:fmus_auto>
+            $<TARGET_FILE_DIR:basic_diagnostics>
+        COMMENT "Copying fmus_auto library to examples directory"
+    )
+
+    add_custom_command(
+        TARGET comprehensive_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:fmus_auto>
+            $<TARGET_FILE_DIR:comprehensive_test>
+        COMMENT "Copying fmus_auto library to examples directory"
+    )
+
+    add_custom_command(
+        TARGET phase3_complete_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:fmus_auto>
+            $<TARGET_FILE_DIR:phase3_complete_test>
+        COMMENT "Copying fmus_auto library to examples directory"
+    )
+endif()
 
 # Install examples
 install(TARGETS basic_diagnostics
@@ -39,4 +77,3 @@ install(TARGETS basic_diagnostics
 #     CXX_STANDARD_REQUIRED ON
 #     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/examples"
 # )
-# add_dependencies(ecu_flashing copy_dlls)

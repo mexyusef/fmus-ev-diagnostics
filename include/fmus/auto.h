@@ -15,6 +15,9 @@
 #include <vector>
 #include <functional>
 
+#include "j2534.h"
+#include "ecu.h"
+
 /**
  * @brief Version information for the FMUS-AUTO library
  */
@@ -57,14 +60,14 @@ public:
      * @return An Auto instance connected to the selected adapter
      * @throws ConnectionError if the adapter cannot be connected
      */
-    static Auto connect(const ConnectionOptions& options);
+    static Auto connect(const j2534::ConnectionOptions& options);
 
     /**
      * @brief Discover all available J2534 adapters
      *
      * @return A vector of available adapter information
      */
-    static std::vector<AdapterInfo> discoverAdapters();
+    static std::vector<j2534::AdapterInfo> discoverAdapters();
 
     /**
      * @brief Get an ECU interface for the default ECU

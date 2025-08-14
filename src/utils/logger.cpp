@@ -1,4 +1,4 @@
-#include <fmus/auto.h>
+#include <fmus/logger.h>
 #include <iostream>
 #include <fstream>
 #include <mutex>

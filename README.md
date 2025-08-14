@@ -2,7 +2,7 @@
 
 FMUS-AUTO is a C++ library for vehicle diagnostics, ECU programming, etc.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -98,7 +98,7 @@ int main() {
 }
 ```
 
-## 🛠️ Supported Hardware
+## Supported Hardware
 
 fmus-ev-diagnostics works with all SAE J2534-compatible interfaces, including:
 
@@ -109,11 +109,22 @@ fmus-ev-diagnostics works with all SAE J2534-compatible interfaces, including:
 - OBDLink SX/MX/EX
 - And many more commercial and DIY J2534 interfaces
 
-## 📚 Documentation
+## Architecture
+
+FMUS-AUTO is designed with a layered, modular architecture:
+
+1. **Foundation Layer**: Direct J2534 API wrappers, low-level message framing
+2. **Protocol Layer**: Protocol-specific implementations (OBD-II, UDS, CAN)
+3. **Diagnostic Layer**: High-level diagnostic services (DTC, sensor data, programming)
+4. **Application Layer**: User-friendly, vehicle-specific functionality
+
+Each layer provides progressively more abstraction and ease-of-use while maintaining the ability to access lower-level functionality when needed.
+
+## Documentation
 
 WIP.
 
-## ⚙️ Building and Development
+##  Building and Development
 
 ### Building from Source
 

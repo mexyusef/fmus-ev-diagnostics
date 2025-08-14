@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FMUS_ECU_H
+#define FMUS_ECU_H
 
 /**
  * @file ecu.h
@@ -34,8 +35,27 @@ namespace j2534 {
 class Message;
 class DTC;
 class LiveData;
-class SecurityAccessParams;
-class FlashOptions;
+
+/**
+ * @brief Security access parameters for ECU authentication
+ */
+struct SecurityAccessParams {
+    std::vector<uint8_t> seed;
+    std::vector<uint8_t> key;
+    uint8_t level = 1;
+    std::string algorithm;
+};
+
+/**
+ * @brief Options for ECU flashing operations
+ */
+struct FlashOptions {
+    bool verifyAfterFlash = true;
+    bool eraseBeforeFlash = true;
+    uint32_t blockSize = 4096;
+    uint32_t timeout = 30000; // milliseconds
+    std::string checksumType = "CRC32";
+};
 
 /**
  * @enum ECUType
